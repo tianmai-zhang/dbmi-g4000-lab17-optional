@@ -8,4 +8,9 @@ WITH WFR_INDEX AS (
 AF_INDEX AS(
 	SELECT person_id,MIN(condition_start_date) AS AF_first_date FROM condition_occurrence
 	WHERE condition_concept_id = 313217
-	GROUP BY person_id);
+	GROUP BY person_id)
+
+SELECT a.person_id,WFR_first_date,AF_first_date FROM WFR_INDEX AS a
+INNER JOIN AF_INDEX AS b
+ON a.person_id = b.person_id
+WHERE WFR_first_date > AF_first_date;
